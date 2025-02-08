@@ -3,6 +3,10 @@ import { Label } from "@/components/ui/label"; // Certifique-se de que o caminho
 import { Button } from "@/components/ui/button"; // Certifique-se de que o caminho está correto
 
 export default function Login() {
+    const handleSubmit = (event) => {
+        event.preventDefault();
+    };
+
     return (
         <div>
             <div className="mx-auto flex flex-col w-full 
