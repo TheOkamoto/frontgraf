@@ -8,13 +8,12 @@ import { Home2 } from './app/home2';
 export default function Router() {
     return (
         <Routes>
-        <Route path="/" element={ <DefaultLayout />} >   
-            <Route path="/" element={<Home />} />
-            <Route path="/home2" element={<Home2/>} />
-        </Route>
-        <Route path="/" element={<AuthLayout />} >
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<AuthLayout />}>
+                <Route path="/" element={<Login />} />
+            </Route>
+            <Route path="/" element={<DefaultLayout />}>
+                <Route path="/home" element={<Home />} />
             </Route>
         </Routes>
-    )
+    );
 }
