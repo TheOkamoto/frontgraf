@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import DefaultLayout from './layouts/app/default';
+import DefaultLayout from './layouts/app/defaultLayout';
 import { Home } from './app/home';
 import AuthLayout from './layouts/auth/authLayout';
 import Login from './auth/login';

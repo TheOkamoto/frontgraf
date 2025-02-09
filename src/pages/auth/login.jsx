@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label"; // Certifique-se de que o caminho está correto
-import { Button } from "@/components/ui/button"; // Certifique-se de que o caminho está correto
+import { Label } from "@/components/ui/label"; 
+import { Button } from "@/components/ui/button"; 
 
 export default function Login() {
     const handleSubmit = (event) => {
