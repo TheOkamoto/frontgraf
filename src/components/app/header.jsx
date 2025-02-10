@@ -1,7 +1,7 @@
 import { Separator } from "../ui/separator";
 import Logo from "../../assets/logo_normal.png";
 import { NavLink } from "./navlink";
-import Users from "../../pages/app/users/UserList";
+import {Users} from "lucide-react";
 
 export function Header() {
     return (
@@ -11,7 +11,8 @@ export function Header() {
                 <Separator orientation="vertical" className="h-6 bg-black " />
                 <nav className="flex items-center space-x-4 lg:space-x-6">
                     <NavLink to="/users"> 
-                        Usuários
+                        <Users className="w-6 h-6" />
+                            Usuários
                     </NavLink >
                 </nav>
             </div>
