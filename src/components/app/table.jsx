@@ -1,16 +1,18 @@
-import { getCoreRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table";
+import { ColumnSizing, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table";
 import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import { useQuery } from "react-query";
+import { Helmet } from "react-helmet-async";
+import { Table } from "lucide-react";
 
-export function DataTable(columns) {
+export function DataTable(title, fetchData, columns, rowRenderer) {
     const [globalFilter, setGlobalFilter] = useState("");
     const [searchParams, setSearchParams] = useSearchParams({});
     const pageIndex = parseInt(searchParams.get("page") || "1", 10) - 1;
 
     const {data: result, isFetched, isLoading} = useQuery({
         queryKey: ["data", pageIndex],
-        queryFn: async () => fetch({ pageIndex})
+        queryFn: async () => fetchData({ pageIndex})
     });
 
     const table = useReactTable({
@@ -33,6 +35,60 @@ export function DataTable(columns) {
     }
 
     return (
-        <>  </>
+        <div>
+            <Helmet title={title} />
+            <div className="flex flex-col gap-4">
+                <h1 className="text-3xl font-bold text-primary"> {title} </h1> 
+                <Input
+                    type="text"
+                    placeholder="Filtrar.."
+                    value={globalFilter}
+                    onChange={(e) => setGlobalFilter(e.target.value)}
+                    className="w-full border text-primary"
+                />  
+
+                <div className="rounded-md border-muted-foreground text-muted-foreground">  
+                    <table className="min-w-full">
+                        <thead>
+                            {table.getHeaderGroups().map((headerGroup) => {
+                                <tr key={headerGroup.id} className="text-left">
+                                    {headerGroup.headers.map(header) = (
+                                        <th key={header.id} className="py-2 px-4">
+                                            {flexRender(header.column.coleumDef.header,
+                                                geader.getContext()
+                                        )}
+                                    </th>
+                                )}
+                                </tr>
+                            })}
+                        </thead>
+                        <tbody>
+                            {isLoading && !result && (
+                            <tr>
+                                <td colSpan={columns.length}>
+                                    Carregando, missão impossível...!
+                                </td>
+                            </tr>
+                            )}
+
+     
+                                {result && table.getRowModel().rows.map((row => rowRenderer(row.original)))}
+                                   
+
+                            {result && 
+                            
+                            }
+                            {result && result.items.length === 0 && (
+                            <tr>
+                                <td colSpan={columns.length}>
+                                Nada foi encontrado "(╯°□°)╯︵ ┻━┻:"
+                                </td>
+                            </tr>                                         
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     );
 }
