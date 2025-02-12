@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { Helmet } from "react-helmet-async";
-import { Table } from "lucide-react";
+import Pagination from "./pagination";
 
 export function DataTable(title, fetchData, columns, rowRenderer) {
     const [globalFilter, setGlobalFilter] = useState("");
@@ -50,17 +50,17 @@ export function DataTable(title, fetchData, columns, rowRenderer) {
                 <div className="rounded-md border-muted-foreground text-muted-foreground">  
                     <table className="min-w-full">
                         <thead>
-                            {table.getHeaderGroups().map((headerGroup) => {
+                            {table.getHeaderGroups().map((headerGroup) => (
                                 <tr key={headerGroup.id} className="text-left">
-                                    {headerGroup.headers.map(header) = (
+                                    {headerGroup.headers.map((header) => (
                                         <th key={header.id} className="py-2 px-4">
-                                            {flexRender(header.column.coleumDef.header,
-                                                geader.getContext()
-                                        )}
-                                    </th>
-                                )}
+                                            {flexRender(header.column.columnDef.header,
+                                                header.getContext()
+                                            )}
+                                        </th>
+                                    ))}
                                 </tr>
-                            })}
+                            ))}
                         </thead>
                         <tbody>
                             {isLoading && !result && (
@@ -75,9 +75,6 @@ export function DataTable(title, fetchData, columns, rowRenderer) {
                                 {result && table.getRowModel().rows.map((row => rowRenderer(row.original)))}
                                    
 
-                            {result && 
-                            
-                            }
                             {result && result.items.length === 0 && (
                             <tr>
                                 <td colSpan={columns.length}>
@@ -85,6 +82,15 @@ export function DataTable(title, fetchData, columns, rowRenderer) {
                                 </td>
                             </tr>                                         
                             )}
+
+                            {result && 
+                                <Pagination
+                                    pageIndex={table.getState.pagination.pageIndex}
+                                    totalCount={result.meta.totalCount}
+                                    perPage={result.meta.perPage}
+                                    onPageChange={handlePageChange}
+                                />
+                            }
                         </tbody>
                     </table>
                 </div>
