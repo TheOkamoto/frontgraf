@@ -1,4 +1,4 @@
-import { Separator } from "../ui/separator";
+import { Separator } from "../ui/Separator";
 import Logo from "../../assets/logo_normal.png";
 import { NavLink } from "./navlink";
 import {Users} from "lucide-react";

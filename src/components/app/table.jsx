@@ -1,9 +1,10 @@
 import { ColumnSizing, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table";
 import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
-import { useQuery } from "react-query";
 import { Helmet } from "react-helmet-async";
 import Pagination from "./pagination";
+import { useQuery } from "@tanstack/react-query";
+import { Input } from "../ui/Input.jsx"; 
 
 export function DataTable(title, fetchData, columns, rowRenderer) {
     const [globalFilter, setGlobalFilter] = useState("");
@@ -50,7 +51,7 @@ export function DataTable(title, fetchData, columns, rowRenderer) {
                 <div className="rounded-md border-muted-foreground text-muted-foreground">  
                     <table className="min-w-full">
                         <thead>
-                            {table.getHeaderGroups().map((headerGroup) => (
+                            {table.getHeaderGroups && table.getHeaderGroups().length > 0 && table.getHeaderGroups().map((headerGroup) => (
                                 <tr key={headerGroup.id} className="text-left">
                                     {headerGroup.headers.map((header) => (
                                         <th key={header.id} className="py-2 px-4">
@@ -71,11 +72,9 @@ export function DataTable(title, fetchData, columns, rowRenderer) {
                             </tr>
                             )}
 
-     
-                                {result && table.getRowModel().rows.map((row => rowRenderer(row.original)))}
-                                   
+                            {result && result.items && table.getRowModel && table.getRowModel().rows.length > 0 && table.getRowModel().rows.map((row) => rowRenderer(row.original))}
 
-                            {result && result.items.length === 0 && (
+                            {result && result.items && result.items.length === 0 && (
                             <tr>
                                 <td colSpan={columns.length}>
                                 Nada foi encontrado "(╯°□°)╯︵ ┻━┻:"
@@ -83,9 +82,9 @@ export function DataTable(title, fetchData, columns, rowRenderer) {
                             </tr>                                         
                             )}
 
-                            {result && 
+                            {result && result.items && 
                                 <Pagination
-                                    pageIndex={table.getState.pagination.pageIndex}
+                                    pageIndex={table.getState().pagination.pageIndex}
                                     totalCount={result.meta.totalCount}
                                     perPage={result.meta.perPage}
                                     onPageChange={handlePageChange}

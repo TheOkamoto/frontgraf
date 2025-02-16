@@ -1,5 +1,5 @@
-const { TableRow } = require("@/components/ui/table");
-const { Table } = require("lucide-react");
+import { DataTable } from "@/components/app/table";
+import { Table, TableRow } from "@/components/ui/Table";
 
 async function fetchUsers({ pageIndex }) {
     const items = [];
